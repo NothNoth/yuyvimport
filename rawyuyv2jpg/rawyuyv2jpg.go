@@ -39,14 +39,20 @@ func main() {
 		}
 
 		img := yuyvimport.Import(w, h, data)
+		if img == nil {
+			fmt.Println("Failed to import " + os.Args[i])
+			continue
+		}
+
 		jpgName := fmt.Sprintf("%s_converted.jpg", os.Args[i])
 		f, _ := os.Create(jpgName)
 		defer f.Close()
 		err = jpeg.Encode(f, img, nil)
 		if err != nil {
 			fmt.Println("Error while encoding " + jpgName + err.Error())
-		} else {
-			fmt.Println("Created " + jpgName)
+			continue
 		}
+
+		fmt.Println("Created " + jpgName)
 	}
 }
