@@ -58,7 +58,7 @@ func loadYUYV(data []byte) (rgb []color.RGBA) {
 }
 
 // Import reads yuyv encoded data from yuyvData and creates an RGBA image with size w x h
-func Import(w int, h int, yuyvData []byte) *image.RGBA {
+func Import(w int, h int, yuyvData []byte) image.Image {
 	rgba := loadYUYV(yuyvData)
 
 	var size image.Rectangle
@@ -88,5 +88,5 @@ func Import(w int, h int, yuyvData []byte) *image.RGBA {
 		}
 	}
 
-	return img
+	return img.SubImage(img.Bounds())
 }
